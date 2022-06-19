@@ -1,15 +1,10 @@
 import java.util.Scanner;
 class ATM 
 {
-	
-	static void clrscr()
-	{
-		
-	}
-	
+	// printMenu method
 	static void printMenu()
 	{
-		clrscr();
+		
 		System.out.print("\n\tSELECT FROM BELOW MENU:\n");
 		System.out.print("\nPress 1 for BALANCE Enquiry\n");
 		System.out.print("\nPress 2 for Withdraw cash\n");
@@ -17,10 +12,11 @@ class ATM
 		System.out.print("\nPress 0 to exit\n");
 		System.out.print("\nEnter your choice here : ");
 	}
-	
+
+	// showBalane method with two paramters
 	static void showBalance(double savingsAccountBalance, double currentAccountBalance)
 	{
-		clrscr();
+		
 		System.out.print("\n\tYOUR ACCOUNT BALANCE\n");
 		System.out.print("\nSavings Account Balance : Rs.");
 		System.out.print(savingsAccountBalance);
@@ -31,16 +27,18 @@ class ATM
 		System.out.print("\n");
 	}
 	
+	// printAccountTypeMenu method that method ask to user for choose account type
 	static void printAccountTypeMenu()
 	{
-		clrscr();
+		
 		System.out.print("\n\tSELECT ACCOUNT TYPE\n");
 		System.out.print("\nPress 's' for savings account\n");
 		System.out.print("\nPress 'c' for current account\n");
 		System.out.print("\nEnter your chocie here : ");				
 	}
 	
-	public static void main(String[] args) throws ATMException
+	// atm method that call inside the main method
+	public static void atm() throws ATMException
 	{
 		Scanner scan = new Scanner(System.in);
 		
@@ -52,37 +50,48 @@ class ATM
 		char choice, accountType;
 		int count = 3;
 		
+		// Do while loop start 
 		do
 		{
 			try
 			{
-			clrscr();
+		
 			System.out.print("\tWELCOME TO JAVA ATM\n");
 			System.out.print("\nEnter you ATM PIN : ");
 			
 			atmPin = scan.nextInt();
 			scan.nextLine();
 			
-			
+			// password define here 
 			if (atmPin == 1234)
 			{
+				// printMenu method is calling
 				printMenu();
 				choice = scan.next().charAt(0);
+				
+				// After menu method asking user choice 
 				switch(choice)
 				{
+					// in this case showBalance method is calling
 					case '1':
 						showBalance(savingsAccountBalance, currentAccountBalance);
 						break;
+					// if user choose for withdrawing cash
 					case '2':
+						// asking for which account you have to deposit cash saving or current
 						printAccountTypeMenu();
 						accountType = scan.next().charAt(0);
+						
+						// nested switch case for asking which type account type user choose
 						switch(accountType)
 						{
+							// withdrawing the amount from saving account	
 							case 's':
 								System.out.print("\nEnter amount to be withdrawn : ");
 								amount = scan.nextDouble();
 								scan.nextLine();
 								
+								// checking the conditon that total amount is greater than withdrawing amount
 								if (amount > savingsAccountBalance)
 								{
 									System.out.print("\nNot enough balance in savings account\n");
@@ -94,11 +103,13 @@ class ATM
 								}
 									
 								break;
+							// withdrawing the amount from current account		
 							case 'c':
 								System.out.print("\nEnter amount to be withdrawn : ");
 								amount = scan.nextDouble();
 								scan.nextLine();
 								
+								// checking the conditon that total amount is greater than withdrawing amount
 								if (amount > currentAccountBalance)
 								{
 									System.out.print("\nNot enough balance in current account\n");
@@ -113,7 +124,9 @@ class ATM
 								System.out.print("\n\nWrong choice for account type.");
 						}
 						break;
+					// if user choose deposit cash
 					case '3':
+						// asking for which account you have to deposit cash saving or current
 						printAccountTypeMenu();
 						accountType = scan.next().charAt(0);
 						switch(accountType)
@@ -139,6 +152,7 @@ class ATM
 							default:
 						}
 						break;
+					// if user press 0 then exit	
 					case '0':
 						System.exit(0);
 						break;
@@ -151,6 +165,7 @@ class ATM
 					throw new ATMException("Wron try again.....");
 				}
 			}
+			// catching the exception according the program
 			catch(ATMException t)
 			{
 				System.out.println(t.getMessage());
@@ -167,6 +182,8 @@ class ATM
 			count = count - 1;
 			System.out.print("\n No of Attempts remaing : ");
 			System.out.print(count);
+			
+			// if no of attempts is 0 then program will be close or exit
 			if(count == 0)
 			{
 				System.out.print("\n No of attemts are over.\n");
@@ -176,12 +193,20 @@ class ATM
 			System.out.print("\nDo you want to continue (y/n) ? ");
 			cont = scan.next().charAt(0);
 		}
+		// checking conditions that user wants to continue or not
 		while(cont == 'y' || cont == 'Y');
-		clrscr();			
-		
+	
+	}
+	
+	// main method
+	public static void main(String[] args)
+	{
+		// atm method is calling
+		atm();
 	}
 }
 
+// this ATMException class is handle all the exception of ATM class
 class ATMException extends RuntimeException
 {
 	String message = "Something went wrong.. Please try again later";
